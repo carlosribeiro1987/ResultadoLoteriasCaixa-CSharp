@@ -22,11 +22,15 @@ namespace Loterias {
         private int concurso;
         private DateTime dataConcurso;
         private bool obteveResultado = false;
-
+        /// <summary>
+        /// Obtém o resultado do último concurso da Quina
+        /// </summary>
         public Quina() {
             UltimoSorteio();
         }
-
+        /// <summary>
+        /// Obtém os dados do sorteio no site da Caixa
+        /// </summary>
         private void UltimoSorteio() {
             try {
                 var pagina = Dcsoup.Parse(new Uri("http://loterias.caixa.gov.br/wps/portal/loterias/landing/megasena/"), 8000);
@@ -46,7 +50,9 @@ namespace Loterias {
                 return;
             }
         }
-
+        /// <summary>
+        /// Retorna o sorteio em um array de string
+        /// </summary>
         public string[] ResultadoArray {
             get {
                 if (obteveResultado) {
@@ -57,6 +63,9 @@ namespace Loterias {
                 }
             }
         }
+        /// <summary>
+        /// Retorna o sorteio em uma string
+        /// </summary>
         public string ResultadoString {
             get {
                 if (obteveResultado) {
@@ -66,7 +75,9 @@ namespace Loterias {
                     return string.Empty;
                 }
             }
-        }
+        }/// <summary>
+        /// Retorna o número do concurso
+        /// </summary>
         public int Concurso {
             get {
                 if (obteveResultado) {
@@ -77,8 +88,10 @@ namespace Loterias {
                 }
             }
         }
-
-        public DateTime DataConcurso {
+        /// <summary>
+        /// Retorma a data do sorteio
+        /// </summary>
+        public DateTime DataSorteio {
             get {
                 if (obteveResultado) {
                     return dataConcurso.Date;
@@ -88,6 +101,12 @@ namespace Loterias {
                 }
             }
         }
-
+        /// <summary>
+        /// Retorna true caso a conexão ao site da Caixa tenha sido bem sucedida.
+        /// Retorna false em caso contrário.
+        /// </summary>
+        public bool ObteveResultado {
+            get { return obteveResultado; }
+        }
     }
 }

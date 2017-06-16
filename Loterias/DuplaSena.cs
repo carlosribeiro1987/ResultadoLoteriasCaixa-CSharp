@@ -13,7 +13,7 @@ using System;
 
 namespace Loterias {
     public class DuplaSena {
-        private string[] arrResultado = null;
+        private string[] arrResultado = null; 
         private string[] primSorteio = null;
         private string[] segSorteio = null;
         private string strPrimResultado = string.Empty;
@@ -23,10 +23,15 @@ namespace Loterias {
         private DateTime dataConcurso;
         private bool obteveResultado = false;
 
+        /// <summary>
+        /// Obtém o resultado do último concurso da DuplaSena
+        /// </summary>
         public DuplaSena() {
             UltimoSorteio();
         }
-
+        /// <summary>
+        /// Obtém os dados do sorteio no site da Caixa
+        /// </summary>
         private void UltimoSorteio() {
             try {
                 var pagina = Dcsoup.Parse(new Uri("http://loterias.caixa.gov.br/wps/portal/loterias/landing/duplasena/"), 8000);
@@ -52,7 +57,9 @@ namespace Loterias {
                 return;
             }
         }
-
+        /// <summary>
+        /// Retorna o primeiro sorteio em um array de string
+        /// </summary>
         public string[] PrimeiroSorteioArray{
             get {
                 if (obteveResultado) {
@@ -63,6 +70,9 @@ namespace Loterias {
                 }
             }
         }
+        /// <summary>
+        /// Retorna o segundo sorteio em um array de string
+        /// </summary>
         public string[] SegundoSorteioArray {
             get {
                 if (obteveResultado) {
@@ -73,7 +83,9 @@ namespace Loterias {
                 }
             }
         }
-
+        /// <summary>
+        /// Retorna o primeiro sorteio em uma string
+        /// </summary>
         public string PrimeiroResultadoString {
             get {
                 if (obteveResultado) {
@@ -84,6 +96,9 @@ namespace Loterias {
                 }
             }
         }
+        /// <summary>
+        /// Retorna o segundo sorteio em uma string
+        /// </summary>
         public string SegundoResultadoString {
             get {
                 if (obteveResultado) {
@@ -94,6 +109,9 @@ namespace Loterias {
                 }
             }
         }
+        /// <summary>
+        /// Retorna o número do concurso
+        /// </summary>
         public int Concurso {
             get {
                 if (obteveResultado) {
@@ -104,10 +122,19 @@ namespace Loterias {
                 }
             }
         }
-
-        public DateTime DataConcurso {
+        /// <summary>
+        /// Retorna a data do sorteio
+        /// </summary>
+        public DateTime DataSorteio {
             get { return dataConcurso.Date; }
         }
 
+        /// <summary>
+        /// Retorna true caso a conexão ao site da Caixa tenha sido bem sucedida.
+        /// Retorna false em caso contrário.
+        /// </summary>
+        public bool ObteveResultado {
+            get { return obteveResultado; }
+        }
     }
 }

@@ -32,11 +32,15 @@ namespace Loterias {
         private decimal premio3 = 0.00M;
         private decimal premio4 = 0.00M;
         private decimal premio5 = 0.00M;
-
+        /// <summary>
+        /// Obtém o resultado do último concurso da Loteria Federal
+        /// </summary>
         public LoteriaFederal() {
             UltimoSorteio();
         }
-
+        /// <summary>
+        /// Obtém os dados do último sorteio no site da Caixa
+        /// </summary>
         private void UltimoSorteio() {
             try {
                 var pagina = Dcsoup.Parse(new Uri("http://loterias.caixa.gov.br/wps/portal/loterias/landing/megasena/"), 8000);
@@ -66,7 +70,9 @@ namespace Loterias {
                 return;
             }
         }
-
+        /// <summary>
+        /// Retorna primeiro o sorteio em uma string
+        /// </summary>
         public string PrimeiroSorteio {
             get {
                 if (obteveResultado)
@@ -76,6 +82,9 @@ namespace Loterias {
 
             }
         }
+        /// <summary>
+        /// Retorna o segundo sorteio em uma string
+        /// </summary>
         public string SegundoSorteio {
             get {
                 if (obteveResultado)
@@ -85,6 +94,9 @@ namespace Loterias {
 
             }
         }
+        /// <summary>
+        /// Retorna o terceiro sorteio em uma string
+        /// </summary>
         public string TerceiroSorteio {
             get {
                 if (obteveResultado)
@@ -94,6 +106,9 @@ namespace Loterias {
 
             }
         }
+        /// <summary>
+        /// retorna o quarto sorteio em uma string
+        /// </summary>
         public string QuartoSorteio {
             get {
                 if (obteveResultado)
@@ -103,6 +118,9 @@ namespace Loterias {
 
             }
         }
+        /// <summary>
+        /// Retorna o quinto sorteio em uma string
+        /// </summary>
         public string QuintoSorteio {
             get {
                 if (obteveResultado)
@@ -113,48 +131,70 @@ namespace Loterias {
             }
         }
         
+        /// <summary>
+        /// Retorna o valor do primeiro prêmio em uma string no formato monetário (R$ 1.234,56)
+        /// </summary>
+        public string PrimeiroPremio {
+            get {
+                if (obteveResultado)
+                    return string.Format("{0:C", premio1);
+                else
+                    return string.Empty;
+            }
+        }
 
-        public decimal PrimeiroPremio {
+        /// <summary>
+        ///  Retorna o valor do segundo prêmio em uma string no formato monetário (R$ 1.234,56)
+        /// </summary>
+        public string SegundoPremio {
             get {
                 if (obteveResultado)
-                    return premio1;
+                    return string.Format("{0:C", premio2);
                 else
-                    return 0.00M;
+                    return string.Empty;
             }
         }
-        public decimal SegundoPremio {
+
+        /// <summary>
+        ///  Retorna o valor do terceiro prêmio em uma string no formato monetário (R$ 1.234,56)
+        /// </summary>
+        public string TerceiroPremio {
             get {
                 if (obteveResultado)
-                    return premio2;
+                    return string.Format("{0:C", premio3);
                 else
-                    return 0.00M;
+                    return string.Empty;
             }
         }
-        public decimal TerceiroPremio {
+
+        /// <summary>
+        ///  Retorna o valor do quarto prêmio em uma string no formato monetário (R$ 1.234,56)
+        /// </summary>
+        public string QuartoPremio {
             get {
                 if (obteveResultado)
-                    return premio3;
+                    return string.Format("{0:C", premio4);
                 else
-                    return 0.00M;
+                    return string.Empty;
             }
         }
-        public decimal QuartoPremio {
+
+        /// <summary>
+        ///  Retorna o valor do quinto prêmio em uma string no formato monetário (R$ 1.234,56)
+        /// </summary>
+        public string QuintoPremio {
             get {
                 if (obteveResultado)
-                    return premio4;
+                    return string.Format("{0:C", premio5);
                 else
-                    return 0.00M;
+                    return string.Empty;
             }
         }
-        public decimal QuintoPremio {
-            get {
-                if (obteveResultado)
-                    return premio5;
-                else
-                    return 0.00M;
-            }
-        }
-        public DateTime DataConcurso {
+
+        /// <summary>
+        /// Retorna a data do sorteio
+        /// </summary>
+        public DateTime DataSorteio {
             get {
                 if (obteveResultado)
                     return dataConcurso.Date;
@@ -162,6 +202,10 @@ namespace Loterias {
                     return Convert.ToDateTime("00/00/0000").Date;
             }
         }
+
+        /// <summary>
+        /// Retorna o numero do concurso
+        /// </summary>
         public int Concurso {
             get {
                 if (obteveResultado)
@@ -169,6 +213,13 @@ namespace Loterias {
                 else
                     return 0;
             }
+        }
+        /// <summary>
+        /// Retorna true caso a conexão ao site da Caixa tenha sido bem sucedida.
+        /// Retorna false em caso contrário.
+        /// </summary>
+        public bool ObteveResultado {
+            get { return obteveResultado; }
         }
     }
 }

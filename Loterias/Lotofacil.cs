@@ -18,18 +18,16 @@ namespace Loterias {
         private int concurso;
         private DateTime dataConcurso;
         bool obteveResultado = false;
-
+        /// <summary>
+        /// Obtém o resultado do último concurso da LotoFácil
+        /// </summary>
         public Lotofacil() {
             UltimoSorteio();
         }
-        
+
         /// <summary>
-        /// Obtém o resultado do último sorteio da lotofácil à partir da Internet.<para/>
-        /// Retorna um array com os números sorteados ou null se não for possível conectar.
+        /// Obtém os dados do sorteio no site da Caixa
         /// </summary>
-        /// <returns>Se a conexão ao site da Caixa for bem-sucedida retorna um array de string com os números do último sorteio. <para/>
-        /// Caso contrário retorna null.</returns>
-        /// 
         private void UltimoSorteio() {
             try {
                 var pagina = Dcsoup.Parse(new Uri("http://loterias.caixa.gov.br/wps/portal/loterias/landing/lotofacil"), 8000);
@@ -49,6 +47,9 @@ namespace Loterias {
             }
         }
 
+        /// <summary>
+        /// Retorna o sorteio em um array de string
+        /// </summary>
         public string[] ResultadoArray {
             get {
                 if (obteveResultado) {
@@ -59,6 +60,9 @@ namespace Loterias {
                 }
             }
         }
+        /// <summary>
+        /// Retorna o sorteio em uma string
+        /// </summary>
         public string ResultadoString {
             get {
                 if (obteveResultado) {
@@ -69,6 +73,9 @@ namespace Loterias {
                 }
             }
         }
+        /// <summary>
+        /// Retorna o número do concurso
+        /// </summary>
         public int Concurso {
             get {
                 if (obteveResultado) {
@@ -79,8 +86,10 @@ namespace Loterias {
                 }
             }            
         }
-
-        public DateTime DataConcurso {
+        /// <summary>
+        /// Retorna a data do sorteio
+        /// </summary>
+        public DateTime DataSorteio {
             get {
                 if (obteveResultado) {
                     return dataConcurso.Date;
@@ -90,10 +99,12 @@ namespace Loterias {
                 }
             }
         }
+        /// <summary>
+        /// Retorna true caso a conexão ao site da Caixa tenha sido bem sucedida.
+        /// Retorna false em caso contrário.
+        /// </summary>
         public bool ObteveResultado {
-            get {
-                return obteveResultado;
-            }
+            get { return obteveResultado; }
         }
     }
     
