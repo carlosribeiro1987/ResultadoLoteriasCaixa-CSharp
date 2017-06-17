@@ -33,6 +33,7 @@ namespace Loterias {
         /// Obtém os dados do sorteio no site da Caixa
         /// </summary>
         private void UltimoSorteio() {
+            try {
                 var pagina = Dcsoup.Parse(new Uri("http://loterias.caixa.gov.br/wps/portal/loterias/landing/duplasena/"), 10000);
                 var divResultado = pagina.Select("div.resultado-loteria");
                 var ulSorteio = divResultado.Select("ul.dupla-sena");
@@ -51,7 +52,11 @@ namespace Loterias {
                 dataConcurso = Convert.ToDateTime(spanConcurso.Text.Substring(15, 10));
                 obteveResultado = true;
                 return;
-           
+            }
+            catch {
+                obteveResultado = false;
+                return;
+            }
         }
         /// <summary>
         /// Retorna o primeiro sorteio em um array de string
