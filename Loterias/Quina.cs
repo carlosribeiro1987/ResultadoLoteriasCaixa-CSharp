@@ -10,10 +10,6 @@
 
 using Supremes;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Loterias {
     class Quina {
@@ -33,7 +29,7 @@ namespace Loterias {
         /// </summary>
         private void UltimoSorteio() {
             try {
-                var pagina = Dcsoup.Parse(new Uri("http://loterias.caixa.gov.br/wps/portal/loterias/landing/megasena/"), 8000);
+                var pagina = Dcsoup.Parse(new Uri("http://loterias.caixa.gov.br/wps/portal/loterias/landing/megasena/"), 10000);
                 var divResultado = pagina.Select("div.resultado-loteria");
                 var ulSorteio = divResultado.Select("ul.quina");
                 strResultado = ulSorteio.Text;

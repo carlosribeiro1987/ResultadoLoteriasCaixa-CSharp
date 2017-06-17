@@ -30,7 +30,7 @@ namespace Loterias {
         /// </summary>
         private void UltimoSorteio() {
             try {
-                var pagina = Dcsoup.Parse(new Uri("http://loterias.caixa.gov.br/wps/portal/loterias/landing/lotofacil"), 8000);
+                var pagina = Dcsoup.Parse(new Uri("http://loterias.caixa.gov.br/wps/portal/loterias/landing/lotofacil"), 10000);
                 var tableSorteio = pagina.Select("table.lotofacil");
                 strResultado = tableSorteio.Text;
                 arrResultado = strResultado.Split(' ');

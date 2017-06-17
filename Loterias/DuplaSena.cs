@@ -13,9 +13,9 @@ using System;
 
 namespace Loterias {
     public class DuplaSena {
-        private string[] arrResultado = null; 
-        private string[] primSorteio = null;
-        private string[] segSorteio = null;
+        private string[] arrResultado = null;
+        private string[] primSorteio = new string[6];
+        private string[] segSorteio = new string[6];
         private string strPrimResultado = string.Empty;
         private string strSegResultado = string.Empty;
         private string strResultados = string.Empty;
@@ -33,8 +33,7 @@ namespace Loterias {
         /// Obtém os dados do sorteio no site da Caixa
         /// </summary>
         private void UltimoSorteio() {
-            try {
-                var pagina = Dcsoup.Parse(new Uri("http://loterias.caixa.gov.br/wps/portal/loterias/landing/duplasena/"), 8000);
+                var pagina = Dcsoup.Parse(new Uri("http://loterias.caixa.gov.br/wps/portal/loterias/landing/duplasena/"), 10000);
                 var divResultado = pagina.Select("div.resultado-loteria");
                 var ulSorteio = divResultado.Select("ul.dupla-sena");
                 strResultados = ulSorteio.Text;
@@ -45,17 +44,14 @@ namespace Loterias {
                     segSorteio[i] = arrResultado[i + 10];
                     strSegResultado += segSorteio[i];
                 }
+
                 var divConcurso = pagina.Select("div#resultados").Select("div.title-bar").Select("h2");
                 var spanConcurso = divConcurso.Select("span");
                 concurso = Convert.ToInt32(spanConcurso.Text.Substring(9, 4));
                 dataConcurso = Convert.ToDateTime(spanConcurso.Text.Substring(15, 10));
                 obteveResultado = true;
                 return;
-            }
-            catch {
-                obteveResultado = false;
-                return;
-            }
+           
         }
         /// <summary>
         /// Retorna o primeiro sorteio em um array de string

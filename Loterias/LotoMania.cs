@@ -10,10 +10,6 @@
 
 using Supremes;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Loterias {
     public class LotoMania {
@@ -33,7 +29,7 @@ namespace Loterias {
         /// </summary>
         private void UltimoSorteio() {
             try {
-                var pagina = Dcsoup.Parse(new Uri("http://loterias.caixa.gov.br/wps/portal/loterias/landing/lotomania"), 5000);
+                var pagina = Dcsoup.Parse(new Uri("http://loterias.caixa.gov.br/wps/portal/loterias/landing/lotomania"), 10000);
                 var divResultado = pagina.Select("div.resultado-loteria");
                 var tableSorteio = divResultado.Select("table.lotomania");
                 strResultado = tableSorteio.Text;
