@@ -7,6 +7,9 @@ Atualmente (16 de março de 2017) este repositório contém classes para a obten
 As classes para obtenção dos outros resultados das demais serão adicionadas em breve.
 Métodos para busca de resultados pelo número do concurso serão adicionados posteriormente.
 
+> ###### Alterações feitas no dia 19 de janeiro de 2018
+> Devido a mudanças no site da Caixa, foram feitas modificações para garantir o funcionamento das classes contidas nesta biblioteca.
+
 ### Características
 * A conexão ao site da Caixa é efetuada quando as classes são instanciadas.
 * A propriedade booleana **ObteveResultado** pode ser utilizada para verificar se a conexão ao site da Caixa foi bem sucedida ou para controle de erros (usando *try...catch*, *if...else*, etc.).

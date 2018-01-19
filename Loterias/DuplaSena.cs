@@ -13,7 +13,6 @@ using System;
 
 namespace Loterias {
     public class DuplaSena {
-        private string[] arrResultado = null;
         private string[] primSorteio = new string[6];
         private string[] segSorteio = new string[6];
         private string strPrimResultado = string.Empty;
@@ -34,22 +33,18 @@ namespace Loterias {
         /// </summary>
         private void UltimoSorteio() {
             try {
-                var pagina = Dcsoup.Parse(new Uri("http://loterias.caixa.gov.br/wps/portal/loterias/landing/duplasena/"), 10000);
-                var divResultado = pagina.Select("div.resultado-loteria");
-                var ulSorteio = divResultado.Select("ul.dupla-sena");
-                strResultados = ulSorteio.Text;
-                arrResultado = strResultados.Split(' ');
-                for (int i = 0; i < 6; i++) {
-                    primSorteio[i] = arrResultado[i + 2];
-                    strPrimResultado += primSorteio[i];
-                    segSorteio[i] = arrResultado[i + 10];
-                    strSegResultado += segSorteio[i];
-                }
-
-                var divConcurso = pagina.Select("div#resultados").Select("div.title-bar").Select("h2");
-                var spanConcurso = divConcurso.Select("span");
-                concurso = Convert.ToInt32(spanConcurso.Text.Substring(9, 4));
-                dataConcurso = Convert.ToDateTime(spanConcurso.Text.Substring(15, 10));
+                Resultados resultado = new Resultados();
+                string txtSorteio = resultado.DuplaSena;
+                strPrimResultado = txtSorteio.Substring((txtSorteio.IndexOf("1º sorteio ") + 11), 17);
+                strSegResultado = txtSorteio.Substring((txtSorteio.IndexOf("2º sorteio ") + 11), 17);
+                primSorteio = strPrimResultado.Split(' ');
+                segSorteio = strSegResultado.Split(' ');
+               // strResultado = txtSorteio.Substring(10, 59);
+               // arrResultado = strResultado.Split(' ');
+                concurso = Convert.ToInt32(txtSorteio.Substring((txtSorteio.IndexOf("Concurso ") + 9), 4));
+                txtSorteio = txtSorteio.Replace(txtSorteio.Substring(0, (txtSorteio.IndexOf(" - ") + 3)), "");
+                string txtData = txtSorteio.Replace(" Confira o resultado › ", "").ToLower();
+                dataConcurso = Convert.ToDateTime(txtData);
                 obteveResultado = true;
                 return;
             }

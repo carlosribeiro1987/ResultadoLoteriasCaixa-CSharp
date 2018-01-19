@@ -15,7 +15,6 @@ using System;
 namespace Loterias {
     public class LoteriaFederal {
         private string strResultado = string.Empty;
-        private string[] arrResultado = null;
         private int concurso;
         private DateTime dataConcurso;
         private bool obteveResultado = false;
@@ -40,25 +39,44 @@ namespace Loterias {
         /// </summary>
         private void UltimoSorteio() {
             try {
-                var pagina = Dcsoup.Parse(new Uri("http://loterias.caixa.gov.br/wps/portal/loterias/landing/megasena/"), 10000);
-                var divResultado = pagina.Select("div.resultado-loteria");
-                var tableSorteio = divResultado.Select("table.resultado-table").Select("tboby");
-                strResultado = tableSorteio.Text;
-                arrResultado = strResultado.Split(' ');
-                sorteio1 = arrResultado[1];
-                sorteio2 = arrResultado[4];
-                sorteio3 = arrResultado[7];
-                sorteio4 = arrResultado[10];
-                sorteio5 = arrResultado[13];
-                premio1 = Convert.ToDecimal(arrResultado[2]);
-                premio2 = Convert.ToDecimal(arrResultado[5]);
-                premio3 = Convert.ToDecimal(arrResultado[8]);
-                premio4 = Convert.ToDecimal(arrResultado[11]);
-                premio5 = Convert.ToDecimal(arrResultado[14]);
-                var divConcurso = pagina.Select("div#resultados").Select("div.title-bar").Select("h2");
-                var spanConcurso = divConcurso.Select("span");
-                concurso = Convert.ToInt32(spanConcurso.Text.Substring(9, 5));
-                dataConcurso = Convert.ToDateTime(spanConcurso.Text.Substring(16, 10));
+                Resultados resultado = new Resultados();
+                string txtSorteio = resultado.Federal;
+                txtSorteio = txtSorteio.Replace(txtSorteio.Substring(0, txtSorteio.IndexOf("1º ")), "");
+
+                sorteio1 = txtSorteio.Substring((txtSorteio.IndexOf("1º ")+3), 5);
+                sorteio2 = txtSorteio.Substring((txtSorteio.IndexOf("2º ") + 3), 5);
+                sorteio3 = txtSorteio.Substring((txtSorteio.IndexOf("3º ") + 3), 5);
+                sorteio4 = txtSorteio.Substring((txtSorteio.IndexOf("4º ") + 3), 5);
+                sorteio5 = txtSorteio.Substring((txtSorteio.IndexOf("5º ") + 3), 5);
+
+                //Premios
+                string tempPremio;
+                //1º premio
+                txtSorteio = txtSorteio.Replace(txtSorteio.Substring(0, (txtSorteio.IndexOf(sorteio1) +6)), "");
+                tempPremio = txtSorteio.Substring(0, txtSorteio.IndexOf(" 2º")).Replace(".", "");
+                premio1 = Convert.ToDecimal(tempPremio);
+                //2º premio
+                txtSorteio = txtSorteio.Replace(txtSorteio.Substring(0, (txtSorteio.IndexOf(sorteio2) + 6)), "");
+                tempPremio = txtSorteio.Substring(0, txtSorteio.IndexOf(" 3º")).Replace(".", "");
+                premio2 = Convert.ToDecimal(tempPremio);
+                //3º premio
+                txtSorteio = txtSorteio.Replace(txtSorteio.Substring(0, (txtSorteio.IndexOf(sorteio3) + 6)), "");
+                tempPremio = txtSorteio.Substring(0, txtSorteio.IndexOf(" 4º")).Replace(".", "");
+                premio3 = Convert.ToDecimal(tempPremio);
+                //4º premio
+                txtSorteio = txtSorteio.Replace(txtSorteio.Substring(0, (txtSorteio.IndexOf(sorteio4) + 6)), "");
+                tempPremio = txtSorteio.Substring(0, txtSorteio.IndexOf(" 5º")).Replace(".", "");
+                premio4 = Convert.ToDecimal(tempPremio);
+                //5º premio
+                txtSorteio = txtSorteio.Replace(txtSorteio.Substring(0, (txtSorteio.IndexOf(sorteio5) + 6)), "");
+                tempPremio = txtSorteio.Substring(0, txtSorteio.IndexOf(" Concurso")).Replace(".", "");
+                premio5 = Convert.ToDecimal(tempPremio);
+
+                concurso = Convert.ToInt32(txtSorteio.Substring((txtSorteio.IndexOf("Concurso ") + 9), 5));
+                txtSorteio = txtSorteio.Replace(txtSorteio.Substring(0, (txtSorteio.IndexOf(" - ") + 3)), "");
+                string txtData = txtSorteio.Replace(" Confira o resultado › ", "").ToLower();
+                dataConcurso = Convert.ToDateTime(txtData);
+
                 obteveResultado = true;
                 return;
             }
@@ -134,7 +152,7 @@ namespace Loterias {
         public string PrimeiroPremio {
             get {
                 if (obteveResultado)
-                    return string.Format("{0:C", premio1);
+                    return string.Format("{0:C}", premio1);
                 else
                     return string.Empty;
             }
@@ -146,7 +164,7 @@ namespace Loterias {
         public string SegundoPremio {
             get {
                 if (obteveResultado)
-                    return string.Format("{0:C", premio2);
+                    return string.Format("{0:C}", premio2);
                 else
                     return string.Empty;
             }
@@ -158,7 +176,7 @@ namespace Loterias {
         public string TerceiroPremio {
             get {
                 if (obteveResultado)
-                    return string.Format("{0:C", premio3);
+                    return string.Format("{0:C}", premio3);
                 else
                     return string.Empty;
             }
@@ -170,7 +188,7 @@ namespace Loterias {
         public string QuartoPremio {
             get {
                 if (obteveResultado)
-                    return string.Format("{0:C", premio4);
+                    return string.Format("{0:C}", premio4);
                 else
                     return string.Empty;
             }
@@ -182,7 +200,7 @@ namespace Loterias {
         public string QuintoPremio {
             get {
                 if (obteveResultado)
-                    return string.Format("{0:C", premio5);
+                    return string.Format("{0:C}", premio5);
                 else
                     return string.Empty;
             }

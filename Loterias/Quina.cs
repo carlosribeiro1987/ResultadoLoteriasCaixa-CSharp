@@ -12,7 +12,7 @@ using Supremes;
 using System;
 
 namespace Loterias {
-    class Quina {
+    public class Quina {
         private string[] arrResultado;
         private string strResultado;
         private int concurso;
@@ -29,15 +29,14 @@ namespace Loterias {
         /// </summary>
         private void UltimoSorteio() {
             try {
-                var pagina = Dcsoup.Parse(new Uri("http://loterias.caixa.gov.br/wps/portal/loterias/landing/megasena/"), 10000);
-                var divResultado = pagina.Select("div.resultado-loteria");
-                var ulSorteio = divResultado.Select("ul.quina");
-                strResultado = ulSorteio.Text;
+                Resultados resultado = new Resultados();
+                string txtSorteio = resultado.Quina;
+                strResultado = txtSorteio.Substring(6, 14);
                 arrResultado = strResultado.Split(' ');
-                var divConcurso = pagina.Select("div#resultados").Select("div.title-bar").Select("h2");
-                var spanConcurso = divConcurso.Select("span");
-                concurso = Convert.ToInt32(spanConcurso.Text.Substring(9, 4));
-                dataConcurso = Convert.ToDateTime(spanConcurso.Text.Substring(15, 10));
+                concurso = Convert.ToInt32(txtSorteio.Substring((txtSorteio.IndexOf("Concurso ") + 9), 4));
+                txtSorteio = txtSorteio.Replace(txtSorteio.Substring(0, (txtSorteio.IndexOf(" - ") + 3)), "");
+                string txtData = txtSorteio.Replace(" Confira o resultado › ", "").ToLower();
+                dataConcurso = Convert.ToDateTime(txtData);
                 obteveResultado = true;
                 return;
             }
@@ -72,8 +71,8 @@ namespace Loterias {
                 }
             }
         }/// <summary>
-        /// Retorna o número do concurso
-        /// </summary>
+         /// Retorna o número do concurso
+         /// </summary>
         public int Concurso {
             get {
                 if (obteveResultado) {
@@ -93,7 +92,7 @@ namespace Loterias {
                     return dataConcurso.Date;
                 }
                 else {
-                    return Convert.ToDateTime("00/00/0000").Date;
+                    return DateTime.MinValue.Date;
                 }
             }
         }
@@ -104,5 +103,6 @@ namespace Loterias {
         public bool ObteveResultado {
             get { return obteveResultado; }
         }
+
     }
 }

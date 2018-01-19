@@ -22,6 +22,7 @@ namespace Loterias {
         /// Obtém o resultado do último concurso da Mega Sena
         /// </summary>
         public MegaSena() {
+
             UltimoSorteio();
         }
         /// <summary>
@@ -29,15 +30,15 @@ namespace Loterias {
         /// </summary>
         private void UltimoSorteio() {
             try {
-                var pagina = Dcsoup.Parse(new Uri("http://loterias.caixa.gov.br/wps/portal/loterias/landing/megasena/"), 10000);
-                var divResultado = pagina.Select("div.resultado-loteria");
-                var ulSorteio = divResultado.Select("ul.mega-sena");
-                strResultado = ulSorteio.Text;
+                Resultados resultado = new Resultados();
+                string txtSorteio = resultado.MegaSena;
+                strResultado = txtSorteio.Substring(10, 17);
                 arrResultado = strResultado.Split(' ');
-                var divConcurso = pagina.Select("div#resultados").Select("div.title-bar").Select("h2");
-                var spanConcurso = divConcurso.Select("span");
-                concurso = Convert.ToInt32(spanConcurso.Text.Substring(9, 4));
-                dataConcurso = Convert.ToDateTime(spanConcurso.Text.Substring(15, 10));
+
+                concurso = Convert.ToInt32(txtSorteio.Substring((txtSorteio.IndexOf("Concurso") + 9), 4));
+                txtSorteio = txtSorteio.Replace(txtSorteio.Substring(0, (txtSorteio.IndexOf(" - ") + 3)), "");
+                string txtData = txtSorteio.Replace(" Confira o resultado › ", "").ToLower();
+                dataConcurso = Convert.ToDateTime(txtData.ToLower());
                 obteveResultado = true;
                 return;
             }

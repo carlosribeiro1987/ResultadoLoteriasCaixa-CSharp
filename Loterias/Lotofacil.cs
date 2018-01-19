@@ -3,7 +3,7 @@
 // Copyright 2017 - Carlos Ribeiro (https://github.com/carlosribeiro1987)                                                //
 // Licenciada sob a GPL v.3  (https://www.gnu.org/licenses/gpl-3.0.txt)                                                  //
 // --------------------------------------------------------------------------------------------------------------------- //
-// Para obtençao dos daodos no site da Caixa, foi utilizado o package DCSoup https://github.com/matarillo/dcsoup         //
+// Para obtençao dos dados no site da Caixa, foi utilizado o package DCSoup https://github.com/matarillo/dcsoup          //
 // DCSoup - Copyright (c) 2009, 2010, 2011, 2012, 2013, 2014 Jonathan Hedley <jonathan@hedley.net>                       //
 // Licenciado sob a MIT License (https://opensource.org/licenses/MIT)                                                    //
 //=======================================================================================================================//
@@ -30,14 +30,14 @@ namespace Loterias {
         /// </summary>
         private void UltimoSorteio() {
             try {
-                var pagina = Dcsoup.Parse(new Uri("http://loterias.caixa.gov.br/wps/portal/loterias/landing/lotofacil"), 10000);
-                var tableSorteio = pagina.Select("table.lotofacil");
-                strResultado = tableSorteio.Text;
+                Resultados resultado = new Resultados();
+                string txtSorteio = resultado.LotoFacil;
+                strResultado = txtSorteio.Substring(10, 44);
                 arrResultado = strResultado.Split(' ');
-                var divConcurso = pagina.Select("div#resultados");
-                var spanConcurso = divConcurso.Select("span");
-                concurso = Convert.ToInt32(spanConcurso.Text.Substring(9, 4));
-                dataConcurso = Convert.ToDateTime(spanConcurso.Text.Substring(15, 10));
+                concurso = Convert.ToInt32(txtSorteio.Substring((txtSorteio.IndexOf("Concurso ") + 9), 4));
+                txtSorteio = txtSorteio.Replace(txtSorteio.Substring(0, (txtSorteio.IndexOf(" - ") + 3)), "");
+                string txtData = txtSorteio.Replace(" Confira o resultado › ", "").ToLower();
+                dataConcurso = Convert.ToDateTime(txtData);
                 obteveResultado = true;
                 return;
             }
