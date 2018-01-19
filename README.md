@@ -1,6 +1,7 @@
+# DEIXOU DE FUNCIONAR APÓS MODIFICAÇÃO NO SITE DA CAIXA. SERÁ CORRIGIDO EM BREVE. 
+
 # ResultadoLoteriasCaixa-CSharp
 ### ClassLibrary desenvolvida em C# para a obtenção dos resultados das Loterias da Caixa.
-
 
 
 Atualmente (16 de março de 2017) este repositório contém classes para a obtenção do último resultado das seguintes loterias: Dupla Sena, Loteria Federal, Lotofácil, Lotomania, Mega Sena e Quina.
