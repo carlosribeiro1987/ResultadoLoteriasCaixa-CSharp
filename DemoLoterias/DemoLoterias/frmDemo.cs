@@ -17,12 +17,12 @@ namespace DemoLoterias {
 
         private void cmbSelecLoteria_SelectedValueChanged(object sender, EventArgs e) {
             btnResultado.Enabled = (cmbSelecLoteria.Text != "Selecione a loteria desejada...");
-        }
-
-        private void btnResultado_Click(object sender, EventArgs e) {
             txtConcurso.Text = string.Empty;
             txtDataSorteio.Text = string.Empty;
             txtResultado.Text = string.Empty;
+        }
+
+        private void btnResultado_Click(object sender, EventArgs e) {
             switch (cmbSelecLoteria.Text) {
                 case "Mega Sena":
                     MegaSena megasena = new MegaSena();
