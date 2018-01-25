@@ -30,7 +30,7 @@ Se você sentiu necessidade de algo, [envie-me um e-mail](mailto:carlos.ribeiro.
 
 Os arquivos contidos neste repositório (com exceção do DCSoup) estão disponibilizados sob a licença [**GPL v3**](https://www.gnu.org/licenses/gpl-3.0.en.html).
 
-O pacote [**DCSoup**](https://github.com/matarillo/dcsoup) utilizado para a obtenção dos dados no site da Caixa foi criado por [Jonathan Hedley](mailto:jonathan@hedley.net) e foi disponibilizado sob a [**MIT License**](https://opensource.org/licenses/MIT).
+O pacote [**DCSoup**](https://github.com/matarillo/dcsoup) utilizado para a obtenção dos dados no site da Caixa foi disponibilizado sob a [**MIT License**](https://opensource.org/licenses/MIT).
 
 Para dúvidas ou sugestões [envie-me um e-mail](mailto:carlos.ribeiro.537h@gmail.com).
 
